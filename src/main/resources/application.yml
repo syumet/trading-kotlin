@@ -1,0 +1,13 @@
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/
+        username: ${PSQL_USER}
+        password: ${PSQL_PASSWORD}
+
+iex:
+    host: https://cloud.iexapis.com/v1
+    token: ${IEX_PUB_TOKEN}
+
+httpClient:
+    poolMaxTotal: 50
+    maxPerRoute: 50
