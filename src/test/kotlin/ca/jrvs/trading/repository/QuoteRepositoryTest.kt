@@ -22,7 +22,7 @@ class QuoteRepositoryTest(@Autowired repo: QuoteRepository)
     }
 
     override fun getOneField(e: Quote): Any {
-        return e.askPrice
+        return e.bidSize
     }
 
     override fun getNonExistId(): String {

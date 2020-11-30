@@ -8,16 +8,16 @@ data class Quote(
         val ticker: String,
 
         @Column(name = "last_price")
-        val lastPrice: Double,
+        val lastPrice: Double?,
 
         @Column(name = "bid_price")
-        val bidPrice: Double,
+        val bidPrice: Double?,
 
         @Column(name = "bid_size")
         val bidSize: Int,
 
         @Column(name = "ask_price")
-        val askPrice: Double,
+        val askPrice: Double?,
 
         @Column(name = "ask_size")
         val askSize: Int
