@@ -14,13 +14,13 @@ data class Quote(
         val bidPrice: Double?,
 
         @Column(name = "bid_size")
-        val bidSize: Int,
+        val bidSize: Int?,
 
         @Column(name = "ask_price")
         val askPrice: Double?,
 
         @Column(name = "ask_size")
-        val askSize: Int
+        val askSize: Int?
 //        val orderList: List<SecurityOrder>
 ) : WithId<String> {
     override fun getId(): String {

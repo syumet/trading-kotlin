@@ -30,11 +30,11 @@ CREATE TABLE public.account
 CREATE TABLE public.quote
 (
     ticker     varchar NOT NULL,
-    last_price float8  NOT NULL,
-    bid_price  float8  NOT NULL,
-    bid_size   int4    NOT NULL,
-    ask_price  float8  NOT NULL,
-    ask_size   int4    NOT NULL,
+    last_price float8  NULL,
+    bid_price  float8  NULL,
+    bid_size   int4    NULL,
+    ask_price  float8  NULL,
+    ask_size   int4    NULL,
     CONSTRAINT quote_pk PRIMARY KEY (ticker)
 );
 
@@ -59,7 +59,7 @@ CREATE OR REPLACE VIEW public.position
 AS
 SELECT account_id,
        ticker,
-       sum(size) AS position
+       sum("size") AS position
 FROM public.security_order
 WHERE status = 'FILLED'
 GROUP BY account_id, ticker;

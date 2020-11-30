@@ -18,10 +18,10 @@ class QuoteRepositoryTest(@Autowired repo: QuoteRepository)
     }
 
     override fun modifyOneField(e: Quote): Quote {
-        return e.copy(askSize = e.askSize + 1)
+        return e.copy(askSize = e.askSize?.plus(1))
     }
 
-    override fun getOneField(e: Quote): Any {
+    override fun getOneField(e: Quote): Any? {
         return e.bidSize
     }
 
