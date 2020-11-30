@@ -18,6 +18,16 @@ abstract class HttpRepository<E, ID>(private val connectionManager: HttpClientCo
 
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
+    abstract fun findAllById(ids: List<ID>): List<E?>
+
+    fun findById(id: ID): E? {
+        return findAllById(listOf(id)).firstOrNull()
+    }
+
+    fun existById(id: ID): Boolean {
+        return findById(id) != null
+    }
+
     private fun getHttpClient(): CloseableHttpClient {
         return HttpClients.custom()
                 .setConnectionManager(connectionManager)
@@ -42,4 +52,6 @@ abstract class HttpRepository<E, ID>(private val connectionManager: HttpClientCo
             }
         }
     }
+
+
 }
