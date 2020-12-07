@@ -2,6 +2,7 @@ package ca.jrvs.trading.repository
 
 import org.apache.http.HttpStatus
 import org.apache.http.client.methods.HttpGet
+import org.apache.http.client.utils.URIBuilder
 import org.apache.http.conn.HttpClientConnectionManager
 import org.apache.http.impl.client.CloseableHttpClient
 import org.apache.http.impl.client.HttpClients
@@ -11,6 +12,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.dao.DataRetrievalFailureException
 import org.springframework.data.repository.NoRepositoryBean
 import org.springframework.data.repository.Repository
+import org.springframework.web.util.UriBuilder
+import org.springframework.web.util.UriUtils
 
 @NoRepositoryBean
 abstract class HttpRepository<E, ID>(private val connectionManager: HttpClientConnectionManager)
@@ -35,9 +38,10 @@ abstract class HttpRepository<E, ID>(private val connectionManager: HttpClientCo
                 .build()
     }
 
-    protected fun executeHttpGet(url: String): String? {
+    protected fun executeHttpGet(uriBuilder: URIBuilder): String? {
+        val url = uriBuilder.toString()
         val response = getHttpClient().execute(HttpGet(url))
-        val bodyString: String = EntityUtils.toString(response.entity)
+        val bodyString = EntityUtils.toString(response.entity)
         return when (val status = response.statusLine.statusCode) {
             HttpStatus.SC_OK -> bodyString
             HttpStatus.SC_NOT_FOUND -> {
@@ -45,7 +49,8 @@ abstract class HttpRepository<E, ID>(private val connectionManager: HttpClientCo
                 null
             }
             else -> {
-                logger.info(bodyString)
+                logger.info("Request : $url")
+                logger.info("Request : $bodyString")
                 throw DataRetrievalFailureException(
                         "Unexpected HTTP status: $status See https://iexcloud.io/docs/api/#error-codes"
                 )
